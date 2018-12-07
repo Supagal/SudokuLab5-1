@@ -324,6 +324,15 @@ public class SudokuController implements Initializable {
 
 							if (!s.isValidValue(CellTo.getiRow(), CellTo.getiCol(), CellFrom.getiCellValue())) {
 								if (game.getShowHints()) {
+									
+									s.AddMistakes(1);
+									System.out.println(s.getiMistakes());
+									
+									if(s.getiMistakes() >= s.getMaxMistakes()) {
+										JOptionPane.showMessageDialog(null, "You Lose");
+										CreateSudokuInstance();
+										BuildGrids();
+									}
 
 								}
 
@@ -337,11 +346,30 @@ public class SudokuController implements Initializable {
 							paneTarget.getChildren().add(iv);
 							System.out.println(CellFrom.getiCellValue());
 							success = true;
-						}
+							
+							
+							s.getPuzzle()[CellTo.getiRow()][CellTo.getiCol()] = CellFrom.getiCellValue();
+						
+							//checks for zeros left in puzzle
+							if (s.getZeros() == 0) {
+								if(s.isSudoku()) {
+									JOptionPane.showMessageDialog(null, "WINNER");
+									CreateSudokuInstance();
+									BuildGrids();
+								}
+								else {
+									JOption.showMessageDialog(null, "Not a winner yet.");
+								}
+							}
+						
+						
+		
 						event.setDropCompleted(success);
 						event.consume();
 					}
-				});
+			}
+		});
+				
 
 				gridPaneSudoku.add(paneTarget, iCol, iRow); // Add the pane to the grid
 			}

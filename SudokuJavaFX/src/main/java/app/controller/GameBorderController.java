@@ -75,5 +75,8 @@ public class GameBorderController implements Initializable  {
 		return 	chkShowHints.isSelected();
 	}
 	
+	publc int getMistakes() {
+		return 0;
+	}
 	
 }
